@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solex 001 WhatsApp Business</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            overflow-x: hidden;
+            gap: 50px;
+            padding: 20px;
+        }
+
+        .device-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;
+            max-width: 1200px;
+        }
+
+        /* Phone Styles */
+        .phone-container {
+            position: relative;
+            width: 300px;
+            height: 600px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateY(0deg) rotateX(5deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateY(5deg) rotateX(5deg);
+            }
+        }
+
+        .phone {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+                        inset 0 0 10px rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            transform-style: preserve-3d;
+        }
+
+        .phone::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 20px;
+            background: #111;
+            border-radius: 0 0 15px 15px;
+            z-index: 10;
+        }
+
+        .phone::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Laptop Styles */
+        .laptop-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            transform-style: preserve-3d;
+            animation: float-laptop 8s ease-in-out infinite;
+        }
+
+        @keyframes float-laptop {
+            0%, 100% {
+                transform: translateY(0) rotateY(-5deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateY(-10deg);
+            }
+        }
+
+        .laptop {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .laptop-screen {
+            position: absolute;
+            width: 100%;
+            height: 80%;
+            background: #111;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+                        inset 0 0 10px rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            transform-origin: bottom;
+            transform: rotateX(-80deg);
+            transition: transform 0.5s ease;
+        }
+
+        .laptop-screen::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 10px;
+            background: #111;
+            border-radius: 0 0 15px 15px;
+            z-index: 10;
+        }
+
+        .laptop-keyboard {
+            position: absolute;
+            bottom: 0;
+            width: 110%;
+            height: 20%;
+            left: -5%;
+            background: #111;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .laptop-keyboard::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: #333;
+            border-radius: 3px;
+        }
+
+        /* Common Screen Styles */
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #e5ddd5;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background-image: url('https://web.whatsapp.com/img/bg-chat-tile-dark_a4be512e7195b6b733d9110b408f075d.png');
+            background-size: 300px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #075e54;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 15px;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
+        }
+
+        .back-arrow {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .contact-info {
+            flex-grow: 1;
+        }
+
+        .contact-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .contact-status {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .chat-messages {
+            padding: 10px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 70%;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 7px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background: #dcf8c6;
+            margin-right: 5px;
+            animation-delay: 0.3s;
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background: white;
+            margin-left: 5px;
+            animation-delay: 0.6s;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #666;
+            text-align: right;
+            margin-top: 3px;
+        }
+
+        .chat-input {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .input-box {
+            flex-grow: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 8px 15px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .send-button {
+            background: #075e54;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Message animations */
+        .message:nth-child(1) { animation-delay: 0.3s; }
+        .message:nth-child(2) { animation-delay: 0.6s; }
+        .message:nth-child(3) { animation-delay: 0.9s; }
+        .message:nth-child(4) { animation-delay: 1.2s; }
+        .message:nth-child(5) { animation-delay: 1.5s; }
+        .message:nth-child(6) { animation-delay: 1.8s; }
+
+        /* Responsive design */
+        @media (max-width: 1300px) {
+            .device-container {
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .laptop-container {
+                width: 400px;
+                height: 300px;
+            }
+            
+            .phone-container {
+                width: 280px;
+                height: 560px;
+            }
+        }
+
+        /* Hover effects */
+        .phone-container:hover {
+            animation: none;
+            transform: rotateY(15deg) rotateX(10deg) translateY(-10px);
+            transition: transform 0.5s ease;
+        }
+
+        .laptop-container:hover .laptop-screen {
+            transform: rotateX(-70deg);
+        }
+
+        .laptop-container:hover {
+            animation: none;
+            transform: translateY(-10px) rotateY(-10deg);
+            transition: transform 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-container">
+        <!-- Phone -->
+        <div class="phone-container">
+            <div class="phone">
+                <div class="screen">
+                    <div class="logo">SOLEX 001</div>
+                    <div class="chat-header">
+                        <div class="back-arrow">←</div>
+                        <div class="contact-info">
+                            <div class="contact-name">Solex Business</div>
+                            <div class="contact-status">online</div>
+                        </div>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message received">
+                            Hello! Welcome to Solex 001 - your premium solution for all tech needs.
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                        <div class="message received">
+                            We specialize in high-quality tech products and innovative solutions that make life easier.
+                            <div class="message-time">10:31 AM</div>
+                        </div>
+                        <div class="message sent">
+                            That sounds interesting! What products do you offer?
+                            <div class="message-time">10:32 AM</div>
+                        </div>
+                        <div class="message received">
+                            We offer a wide range of products including smart devices, home automation systems, and cutting-edge gadgets.
+                            <div class="message-time">10:33 AM</div>
+                        </div>
+                        <div class="message received">
+                            Check out our exclusive offers this month - up to 30% off on selected items!
+                            <div class="message-time">10:34 AM</div>
+                        </div>
+                        <div class="message sent">
+                            Great! How can I place an order?
+                            <div class="message-time">10:35 AM</div>
+                        </div>
+                        <div class="message received">
+                            Simply reply to this message or visit our website at www.solex001.com. We offer free delivery for orders above $50!
+                            <div class="message-time">10:36 AM</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" class="input-box" placeholder="Type a message">
+                        <button class="send-button">→</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Laptop -->
+        <div class="laptop-container">
+            <div class="laptop">
+                <div class="laptop-screen">
+                    <div class="screen">
+                        <div class="logo">SOLEX 001</div>
+                        <div class="chat-header">
+                            <div class="back-arrow">←</div>
+                            <div class="contact-info">
+                                <div class="contact-name">Solex Business</div>
+                                <div class="contact-status">online</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages">
+                            <div class="message received">
+                                Hello! Welcome to Solex 001 - your premium solution for all tech needs.
+                                <div class="message-time">10:30 AM</div>
+                            </div>
+                            <div class="message received">
+                                We specialize in high-quality tech products and innovative solutions that make life easier.
+                                <div class="message-time">10:31 AM</div>
+                            </div>
+                            <div class="message sent">
+                                That sounds interesting! What products do you offer?
+                                <div class="message-time">10:32 AM</div>
+                            </div>
+                            <div class="message received">
+                                We offer a wide range of products including smart devices, home automation systems, and cutting-edge gadgets.
+                                <div class="message-time">10:33 AM</div>
+                            </div>
+                            <div class="message received">
+                                Check out our exclusive offers this month - up to 30% off on selected items!
+                                <div class="message-time">10:34 AM</div>
+                            </div>
+                            <div class="message sent">
+                                Great! How can I place an order?
+                                <div class="message-time">10:35 AM</div>
+                            </div>
+                            <div class="message received">
+                                Simply reply to this message or visit our website at www.solex001.com. We offer free delivery for orders above $50!
+                                <div class="message-time">10:36 AM</div>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" class="input-box" placeholder="Type a message">
+                            <button class="send-button">→</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="laptop-keyboard"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
