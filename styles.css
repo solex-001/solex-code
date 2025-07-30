@@ -1,0 +1,128 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: #f8f9fa;
+}
+
+/* Header */
+header {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-button {
+    background: white;
+    color: #007bff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.cart-button:hover {
+    background: #e0e0e0;
+}
+
+/* Products Section */
+.products {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.add-to-cart {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.add-to-cart:hover {
+    background: #218838;
+}
+
+/* Cart Sidebar */
+.cart {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    width: 250px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.cart ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cart li {
+    background: #f1f1f1;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.checkout {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.checkout:hover {
+    background: #e68900;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .products {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cart {
+        position: relative;
+        margin: 20px auto;
+        width: 90%;
+    }
+}

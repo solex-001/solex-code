@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solex001- web Development & Programmer</title>
+    <script src="htpps://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: "Arial", sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            h1 {
+                font-size: 4em;
+                margin-bottom: 0.2em;
+                color: #e74c3c;
+                text-shadow: 0 0 8px rgba(231, 76, 60, 0.7);
+             }
+             h2 {
+                font-size: 2em;
+                margin-bottom: 0;
+                color: #3498db;
+                text-shadow: 0 0 8px rgba(52, 152, 219, 0.7);
+             }
+             .loading {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 1.5em;
+                color: #fff;
+
+             }
+             .particles {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                pointer-events: none;
+             }
+             .tech-icon {
+                position: absolute;
+                opacity: 0;
+                font-size: 24%;
+                color: #fff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+                animation: float 15s linear infinite;
+
+             }
+             @keyframes float { 0% {
+                transform:translateY(100vh) scale(0.5);
+                opacity: 0;
+             }
+             10% {
+                opacity: 1;
+             }
+             90% {
+                opacity: 1;
+             }
+             100% {
+                transform: translateY(-100px) scale(1.5);
+             }
+                
+             
+
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas"></div>
+    <div class="particles" id="particles"></div>
+    <div class="loading" id="Loading">Loading 3D environment...</div>
+    <div class="content" id="content"></div>
+    <h1>SOLEX 001</h1>
+    <h2>professional web Developer & Programmer</h2>
+</div>
+
+<script>
+    // set up Three.js
+    const scene = new Three.scene();
+    const camera =new
+    Three.persectivecamera(75, window.innerWidth/window.innerHeight,0.1, 1000)
+    const renderer=new Three.webGLRenderer({ antialias: true});
+    renderer.setsize(window.innerWidth, window.innerHeight);
+    renderer.setclearcolor(0x000000);
+
+    document.getElementById("canvas").appendChild(renderer.domElement);
+
+    //lighting
+    const ambientLight = new Three.ambientLight(0x404040);
+    sence.add(directonalLight);
+
+    const directonalLight = new Three.directonalLight(0xffffff,1);
+    directonalLight.postion.set(1,1,1);
+    scene.add(directonalLight);
+
+    //create particles
+    const particlecount =2000;
+    const particles = new Three.Group();
+
+    for(let i=0;i<particlecount;i++){
+        const geometry = new Three.shereGeometry(0.05,8,8);
+        const material = new Three.MeshBasicMaterial({
+            color: new Three.color(
+                0.5 +Math.random()*0.5,
+                0.5 +Math.random()*0.5,
+                0.5 +Math.random()*0.5
+            ),
+            transparent:true,
+            opacity: Math.random()*0.5+0.1
+        });
+
+        const particle = new Three.Mesh(geometry,material);
+
+        //position particles in sphere
+        const theta = Math.random()* Math.PI*2;
+        const phi = Math.acos(2*Math.random()-1);
+        const radius =5 +Math.random()* 15;
+
+        s 
+    }
+</script>
+
+</body>

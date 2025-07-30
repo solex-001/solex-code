@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solex001 Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="">
+    <style>
+        
+        /* Vibrant color palette */
+        :root {
+            --primary: #FF3E4D;
+            --secondary: #4BCFFA;
+            --accent: #F9CA24;
+            --dark: #1B1464;
+            --light: #F5F6FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            perspective: 1000px;
+            overflow-x: hidden;
+        }
+
+        /* 3D Card Container */
+        .login-container {
+            width: 90%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2),
+                        0 0 0 2px rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* 3D tilt effect */
+        .login-container:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+
+        /* Logo styling */
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 2px;
+        }
+
+        .logo .tagline {
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        /* Form elements */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+            transform-style: preserve-3d;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: white;
+            opacity: 0.7;
+        }
+
+        /* Remember me & forgot password */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            transform: translateZ(15px);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            accent-color: var(--accent);
+        }
+
+        .remember-me label {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .forgot-password a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Login button */
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform: translateZ(25px);
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateZ(25px) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sign up link */
+        .signup-link {
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            transform: translateZ(10px);
+        }
+
+        .signup-link a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Decorative elements */
+        .circle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            top: -50px;
+            right: -50px;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -80px;
+            left: -80px;
+            animation: pulse 10s infinite alternate;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateZ(20px);
+            }
+            50% {
+                transform: translateY(-10px) translateZ(20px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .input-group input {
+                padding: 12px 15px;
+            }
+            
+            .options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <!-- Decorative circles -->
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        
+        <!-- Solex001 Logo -->
+        <div class="logo">
+            <h1>SolexBank</h1>
+            <div class="tagline">keep banking with us for Future safe for your famil and friends</div>
+        </div>
+        
+        <!-- Login Form -->
+        <form>
+            <div class="input-group">
+                <input type="text" placeholder="Username" required>
+                <i class="fas fa-user"></i>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" placeholder="Password" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="swiftbankforgetpassword.html">Forgot password?</a>
+                </div>
+            </div>
+            
+             already have an account  <a href="hell.html">LOGIN</a>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="loginnewsbank.html">Sign up</a>
+                 <br>
+                 <br>Thanks for banking with us!!!
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Enhanced 3D tilt effect
+        const loginContainer = document.getElementById('loginContainer');
+        
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            loginContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        
+        // Reset position when mouse leaves
+        loginContainer.addEventListener('mouseleave', () => {
+            loginContainer.style.transform = 'rotateY(0) rotateX(0)';
+        });
+        
+        // Add pulse animation to login button
+        const loginBtn = document.querySelector('.login-btn');
+        loginBtn.addEventListener('mouseenter', () => {
+            loginBtn.style.animation = 'pulse 0.5s infinite alternate';
+        });
+        loginBtn.addEventListener('mouseleave', () => {
+            loginBtn.style.animation = 'none';
+        });
+    </script>
+</body>
+</html>

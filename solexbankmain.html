@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftBank - Mobile Banking</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2a52be;
+            --primary-dark: #1a3a8f;
+            --secondary: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* App Container */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+    position: absolute;
+    size: 8px;
+    top: 8px;
+    left: 5px;
+    height: 3px;
+    width: 5px;
+    max-width: 10px;
+
+        }
+        
+        .user-profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .balance-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+            margin-bottom: -2rem;
+            position: relative;
+            z-index: 20;
+        }
+        
+        .balance-title {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .balance-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .balance-details {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .balance-detail {
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        .app-content {
+            padding: 3rem 1rem 5rem;
+            background-color: #f5f7fa;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-btn {
+            background-color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .action-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .action-text {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        /* Transactions */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all {
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .transactions {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .transaction {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .transaction:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+        }
+        
+        .transaction-details {
+            flex: 1;
+        }
+        
+        .transaction-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .transaction-date {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .transaction-amount {
+            font-weight: 600;
+        }
+        
+        .income {
+            color: var(--secondary);
+        }
+        
+        .expense {
+            color: var(--danger);
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.8rem 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 480px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .nav-text {
+            font-size: 0.7rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 400px) {
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-btn {
+                padding: 1rem 0.2rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+        
+        /* Transaction Colors */
+        .icon-transfer {
+            background-color: #2196F3;
+        }
+        
+        .icon-shopping {
+            background-color: #FF5722;
+        }
+        
+        .icon-salary {
+            background-color: #4CAF50;
+        }
+        
+        .icon-food {
+            background-color: #FFC107;
+        }
+        
+        .icon-bills {
+            background-color: #9C27B0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- App Header -->
+        <header class="app-header">
+            <div class="header-top">
+                <div class=".logo-icon">
+                    <img src="Screenshot_20250115-155453_1.png" class=" .logo-icon">
+                    <span>SolexBank</span>
+                </div>
+                <div class="user-profile">
+                    <span>👤</span>
+                </div>
+            </div>
+            
+            
+            <div class="balance-card animate">
+                <div class="balance-title">Total Balance</div>
+                <div class="balance-amount">$0.00</div>
+                <div class="balance-details">
+                    <div class="balance-detail">
+                        <div class="detail-label">Income</div>
+                        <div class="detail-value income">+$0.00</div>
+                    </div>
+                    <div class="balance-detail">
+                        <div class="detail-label">Expenses</div>
+                        <div class="detail-value expense">-$0.0</div>
+                    </div>
+                    <div class="balance-detail">
+                        <div class="detail-label">Savings</div>
+                        <div class="detail-value">$0.00</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="app-content">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-btn animate delay-1">
+                    <span class="action-icon">💸</span>
+                    <span class="action-text">Transfer</span>
+                </button>
+                <button class="action-btn animate delay-1">
+                    <span class="action-icon">📊</span>
+                    <span class="action-text">Pay Bills</span>
+                </button>
+                <button class="action-btn animate delay-2">
+                    <span class="action-icon">📱</span>
+                    <span class="action-text">Top Up</span>
+                </button>
+                <button class="action-btn animate delay-2">
+                    <span class="action-icon">💳</span>
+                    <span class="action-text">Cards</span>
+                </button>
+                <button class="action-btn animate delay-3">
+                    <span class="action-icon">📤</span>
+                    <span class="action-text">Send</span>
+                </button>
+                <button class="action-btn animate delay-3">
+                    <span class="action-icon">📥</span>
+                    <span class="action-text">Request</span>
+                </button>
+                <button class="action-btn animate delay-3">
+                    <span class="action-icon">🏦</span>
+                    <span class="action-text">Loans</span>
+                </button>
+                <button class="action-btn animate delay-3">
+                    <span class="action-icon">⚙️</span>
+                    <span class="action-text">More</span>
+                </button>
+            </div>
+            
+            
+        
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Home</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Stats</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">💳</span>
+                <span class="nav-text">Cards</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Settings</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

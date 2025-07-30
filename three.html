@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful E-Book</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            color: #333;
+        }
+
+        /* E-Book Container */
+        .ebook-container {
+            width: 90%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        /* Header */
+        .ebook-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ebook-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .ebook-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .color-mix {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+        }
+
+        .color-mix-1 {
+            background: #ff9a9e;
+            top: -50px;
+            left: -50px;
+        }
+
+        .color-mix-2 {
+            background: #fad0c4;
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Navigation */
+        .ebook-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-btn:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Content */
+        .ebook-content {
+            padding: 2rem;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page h2 {
+            color: #6a11cb;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #fad0c4;
+            padding-bottom: 0.5rem;
+        }
+
+        .page p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .page img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        .ebook-footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Page Indicator */
+        .page-indicator {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .page-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dee2e6;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-dot.active {
+            background: #6a11cb;
+            transform: scale(1.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Color Mixing Effect */
+        .color-box {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ebook-header h1 {
+                font-size: 2rem;
+            }
+            
+            .ebook-nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ebook-container">
+        <div class="ebook-header">
+            <div class="color-mix color-mix-1"></div>
+            <div class="color-mix color-mix-2"></div>
+            <h1>The Art of Color Mixing</h1>
+            <p>An interactive guide to beautiful color combinations</p>
+        </div>
+
+        <div class="ebook-nav">
+            <button class="nav-btn" id="prev-btn" disabled>Previous</button>
+            <button class="nav-btn" id="next-btn">Next</button>
+        </div>
+
+        <div class="ebook-content">
+            <!-- Page 1 -->
+            <div class="page active" id="page-1">
+                <h2>Welcome to Color Theory</h2>
+                <p>Color is a powerful tool in design. It can evoke emotions, convey messages, and create visual harmony. In this e-book, we'll explore the fascinating world of color mixing and how to create stunning color palettes.</p>
+                
+                <div class="color-box" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);">
+                    Gradient Color Mix Example
+                </div>
+                
+                <p>Color theory is both the science and art of using color. It explains how humans perceive color; how colors mix, match or clash; the subliminal messages colors communicate; and the methods used to replicate color.</p>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="page" id="page-2">
+                <h2>Primary Colors</h2>
+                <p>The primary colors are red, blue, and yellow. These colors cannot be created by mixing other colors. All other colors are derived from these three hues.</p>
+                
+                <div class="color-box" style="background: linear-gradient(135deg, #ff0000 0%, #0000ff 50%, #ffff00 100%);">
+                    Primary Colors: Red, Blue, Yellow
+                </div>
+                
+                <p>In traditional color theory (used in paint and pigments), primary colors are the 3 pigment colors that cannot be mixed or formed by any combination of other colors. All other colors are derived from these 3 hues.</p>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="page" id="page-3">
+                <h2>Secondary Colors</h2>
+                <p>Secondary colors are created by mixing two primary colors. The secondary colors are green, orange, and purple.</p>
+                
+                <div class="color-box" style="background: linear-gradient(135deg, #00ff00 0%, #ffa500 50%, #800080 100%);">
+                    Secondary Colors: Green, Orange, Purple
+                </div>
+                
+                <p>Here's how secondary colors are created:</p>
+                <ul style="margin-left: 2rem; line-height: 1.6;">
+                    <li>Red + Yellow = Orange</li>
+                    <li>Yellow + Blue = Green</li>
+                    <li>Blue + Red = Purple</li>
+                </ul>
+            </div>
+
+            <!-- Page 4 -->
+            <div class="page" id="page-4">
+                <h2>Tertiary Colors</h2>
+                <p>Tertiary colors are created by mixing a primary color with a secondary color. This gives us even more color variations.</p>
+                
+                <div class="color-box" style="background: linear-gradient(135deg, #ff4500 0%, #ffd700 33%, #7cfc00 66%, #9932cc 100%);">
+                    Tertiary Colors: Red-Orange, Yellow-Orange, Yellow-Green, etc.
+                </div>
+                
+                <p>Examples of tertiary colors include:</p>
+                <ul style="margin-left: 2rem; line-height: 1.6;">
+                    <li>Red + Orange = Red-Orange</li>
+                    <li>Yellow + Green = Yellow-Green</li>
+                    <li>Blue + Purple = Blue-Purple</li>
+                    <li>And many more combinations</li>
+                </ul>
+            </div>
+
+            <!-- Page 5 -->
+            <div class="page" id="page-5">
+                <h2>Color Harmonies</h2>
+                <p>Color harmonies are pleasing color schemes created according to their position on the color wheel.</p>
+                
+                <div class="color-box" style="background: linear-gradient(135deg, #3f51b5 0%, #9c27b0 50%, #e91e63 100%);">
+                    Analogous, Complementary, and Triadic Schemes
+                </div>
+                
+                <p>Some common color harmonies include:</p>
+                <ul style="margin-left: 2rem; line-height: 1.6;">
+                    <li><strong>Complementary:</strong> Colors opposite each other on the color wheel</li>
+                    <li><strong>Analogous:</strong> Colors next to each other on the color wheel</li>
+                    <li><strong>Triadic:</strong> Three colors evenly spaced on the color wheel</li>
+                    <li><strong>Split-Complementary:</strong> A variation of the complementary scheme</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page-indicator">
+            <div class="page-dot active" data-page="1"></div>
+            <div class="page-dot" data-page="2"></div>
+            <div class="page-dot" data-page="3"></div>
+            <div class="page-dot" data-page="4"></div>
+            <div class="page-dot" data-page="5"></div>
+        </div>
+
+        <div class="ebook-footer">
+            © 2023 Color Theory E-Book | Interactive Learning Experience
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.page-dot');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentPage = 0;
+
+            // Initialize the e-book
+            showPage(currentPage);
+
+            // Next button click event
+            nextBtn.addEventListener('click', function() {
+                if (currentPage < pages.length - 1) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            });
+
+            // Previous button click event
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+
+            // Dot navigation click events
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentPage = parseInt(this.getAttribute('data-page')) - 1;
+                    showPage(currentPage);
+                });
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' && currentPage < pages.length - 1) {
+                    currentPage++;
+                    showPage(currentPage);
+                } else if (e.key === 'ArrowLeft' && currentPage > 0) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+
+            // Show the current page and update navigation
+            function showPage(index) {
+                // Hide all pages
+                pages.forEach(page => page.classList.remove('active'));
+                // Show current page
+                pages[index].classList.add('active');
+
+                // Update dots
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[index].classList.add('active');
+
+                // Update button states
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === pages.length - 1;
+
+                // Animate color mix background
+                animateColorMix(index);
+            }
+
+            // Animate the color mixing background
+            function animateColorMix(pageIndex) {
+                const colorMix1 = document.querySelector('.color-mix-1');
+                const colorMix2 = document.querySelector('.color-mix-2');
+                
+                // Different colors for different pages
+                const colors = [
+                    { color1: '#ff9a9e', color2: '#fad0c4' },
+                    { color1: '#ff0000', color2: '#0000ff' },
+                    { color1: '#00ff00', color2: '#ffa500' },
+                    { color1: '#ff4500', color2: '#9932cc' },
+                    { color1: '#3f51b5', color2: '#e91e63' }
+                ];
+
+                // Animate to new colors
+                colorMix1.style.transition = 'background 0.8s ease';
+                colorMix2.style.transition = 'background 0.8s ease';
+                
+                colorMix1.style.background = colors[pageIndex].color1;
+                colorMix2.style.background = colors[pageIndex].color2;
+
+                // Random movement
+                const randomPos1 = () => Math.floor(Math.random() * 50) - 25;
+                const randomPos2 = () => Math.floor(Math.random() * 50) - 25;
+                
+                colorMix1.style.transform = translate(${randomPos1()}px, ${randomPos1()}px);
+                colorMix2.style.transform = translate(${randomPos2()}px, ${randomPos2()}px);
+            }
+
+            // Continuous subtle animation for color mix
+            setInterval(() => {
+                if (document.querySelector('.page.active')) {
+                    const colorMix1 = document.querySelector('.color-mix-1');
+                    const colorMix2 = document.querySelector('.color-mix-2');
+                    
+                    const randomPos1 = () => Math.floor(Math.random() * 10) - 5;
+                    const randomPos2 = () => Math.floor(Math.random() * 10) - 5;
+                    
+                    colorMix1.style.transform = translate(${randomPos1()}px, ${randomPos1()}px);
+                    colorMix2.style.transform = translate(${randomPos2()}px, ${randomPos2()}px);
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
