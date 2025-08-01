@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Analysis Insights</title>
+    <style>
+        /* Basic Reset & Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f5e9; /* Light green background */
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Container for the entire page content */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4CAF50; /* Green accent */
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: #2E7D32; /* Darker green */
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: #f1f8e9; /* Lighter green for sections */
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            color: #388E3C; /* Medium green */
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Frequency Distribution Table */
+        .frequency-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .frequency-table th,
+        .frequency-table td {
+            border: 1px solid #c8e6c9; /* Light green border */
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        .frequency-table th {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            font-weight: bold;
+        }
+
+        .frequency-table tbody tr:nth-child(even) {
+            background-color: #e8f5e9; /* Zebra striping */
+        }
+
+        .frequency-table tbody tr:hover {
+            background-color: #a5d6a7; /* Hover effect */
+        }
+
+        /* Histogram Visualization */
+        .histogram {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 300px; /* Fixed height for the histogram area */
+            margin-top: 30px;
+            padding: 20px 10px 0 10px;
+            border-left: 2px solid #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            position: relative;
+        }
+
+        .histogram-bar {
+            width: 40px; /* Width of each bar */
+            background-color: #66BB6A; /* Medium green bar */
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: height 0.5s ease-out; /* Smooth height transition */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Align content to the bottom */
+            align-items: center;
+        }
+
+        .histogram-bar .bar-value {
+            font-size: 0.8rem;
+            color: #2E7D32;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .histogram-bar .bar-label {
+            font-size: 0.7rem;
+            color: #388E3C;
+            margin-top: 5px;
+            transform: rotate(-45deg); /* Rotate labels for better fit */
+            transform-origin: bottom right;
+            white-space: nowrap;
+        }
+
+        /* Venn Diagram Visualization */
+        .venn-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 300px; /* Height for the Venn diagram area */
+            margin-top: 30px;
+        }
+
+        .venn-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background-color: rgba(76, 175, 80, 0.5); /* Semi-transparent green */
+            border: 3px solid #4CAF50;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2E7D32;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .venn-circle.set-a {
+            left: 30%;
+            top: 10%;
+            transform: translateX(-50%);
+        }
+
+        .venn-circle.set-b {
+            left: 70%;
+            top: 10%;
+            transform: translateX(-50%);
+        }
+
+        .venn-circle.set-c {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Intersection Labels */
+        .intersection-label {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #388E3C;
+            font-weight: normal;
+        }
+
+        /* Specific Intersection Positions (Example for 3 sets) */
+        .intersection-ab { top: 40%; left: 45%; }
+        .intersection-bc { top: 65%; left: 60%; }
+        .intersection-ac { top: 65%; left: 35%; }
+        .intersection-abc { top: 50%; left: 50%; transform: translate(-50%, -50%); } /* Center */
+
+
+        /* Insights Section */
+        .insights {
+            margin-top: 40px;
+            padding: 25px;
+            background-color: #fff9c4; /* Light yellow for insights */
+            border-left: 5px solid #fbc02d; /* Yellow accent */
+            border-radius: 5px;
+        }
+
+        .insights h3 {
+            font-size: 1.6rem;
+            color: #f57f17; /* Dark yellow */
+            margin-bottom: 15px;
+        }
+
+        .insights ul {
+            list-style-type: disc;
+            margin-left: 25px;
+        }
+
+        .insights li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+            .section h2 {
+                font-size: 1.8rem;
+            }
+            .histogram {
+                height: 250px;
+                justify-content: space-evenly; /* Better spacing on smaller screens */
+            }
+            .histogram-bar {
+                width: 35px;
+            }
+            .venn-diagram {
+                height: 250px;
+                flex-direction: column; /* Stack circles vertically */
+            }
+            .venn-circle {
+                position: static; /* Remove absolute positioning */
+                margin: 10px 0;
+                transform: none !important; /* Remove transforms */
+                width: 150px;
+                height: 150px;
+            }
+            .venn-circle.set-a { left: auto; top: auto; }
+            .venn-circle.set-b { left: auto; top: auto; }
+            .venn-circle.set-c { left: auto; top: auto; }
+            .intersection-label { display: none; } /* Hide intersection labels when stacked */
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .section h2 {
+                font-size: 1.6rem;
+            }
+            .frequency-table th,
+            .frequency-table td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            .histogram-bar {
+                width: 30px;
+            }
+            .venn-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Statistical Analysis & Insights</h1>
+            <p>Exploring Data Distributions and Relationships</p>
+        </header>
+
+        <section class="frequency-section">
+            <h2>Frequency Distribution Table</h2>
+            <p>Analysis of student scores on a recent quiz (out of 100):</p>
+            <table class="frequency-table">
+                <thead>
+                    <tr>
+                        <th>Score Range</th>
+                        <th>Frequency (Count)</th>
+                        <th>Relative Frequency</th>
+                        <th>Cumulative Frequency</th>
+                        <th>Cumulative Relative Frequency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sample Data -->
+                    <tr>
+                        <td>0-9</td>
+                        <td>1</td>
+                        <td>0.02</td>
+                        <td>1</td>
+                        <td>0.02</td>
+                    </tr>
+                    <tr>
+                        <td>10-19</td>
+                        <td>2</td>
+                        <td>0.04</td>
+                        <td>3</td>
+                        <td>0.06</td>
+                    </tr>
+                    <tr>
+                        <td>20-29</td>
+                        <td>4</td>
+                        <td>0.08</td>
+                        <td>7</td>
+                        <td>0.14</td>
+                    </tr>
+                    <tr>
+                        <td>30-39</td>
+                        <td>7</td>
+                        <td>0.14</td>
+                        <td>14</td>
+                        <td>0.28</td>
+                    </tr>
+                    <tr>
+                        <td>40-49</td>
+                        <td>10</td>
+                        <td>0.20</td>
+                        <td>24</td>
+                        <td>0.48</td>
+                    </tr>
+                    <tr>
+                        <td>50-59</td>
+                        <td>12</td>
+                        <td>0.24</td>
+                        <td>36</td>
+                        <td>0.72</td>
+                    </tr>
+                    <tr>
+                        <td>60-69</td>
+                        <td>8</td>
+                        <td>0.16</td>
+                        <td>44</td>
+                        <td>0.88</td>
+                    </tr>
+                    <tr>
+                        <td>70-79</td>
+                        <td>4</td>
+                        <td>0.08</td>
+                        <td>48</td>
+                        <td>0.96</td>
+                    </tr>
+                    <tr>
+                        <td>80-89</td>
+                        <td>1</td>
+                        <td>0.02</td>
+                        <td>49</td>
+                        <td>0.98</td>
+                    </tr>
+                    <tr>
+                        <td>90-100</td>
+                        <td>1</td>
+                        <td>0.02</td>
+                        <td>50</td>
+                        <td>1.00</td>
+                    </tr>
+                    <!-- End Sample Data -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th>50</th>
+                        <th>1.00</th>
+                        <th>-</th>
+                        <th>-</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section class="histogram-section">
+            <h2>Histogram of Scores</h2>
+            <p>Visualizing the frequency of scores across different ranges:</p>
+            <div class="histogram">
+                <!-- Bars will be generated dynamically or hardcoded -->
+                <div class="histogram-bar" style="height: 2%;">
+                    <span class="bar-value">1</span>
+                    <span class="bar-label">0-9</span>
+                </div>
+                <div class="histogram-bar" style="height: 4%;">
+                    <span class="bar-value">2</span>
+                    <span class="bar-label">10-19</span>
+                </div>
+                <div class="histogram-bar" style="height: 8%;">
+                    <span class="bar-value">4</span>
+                    <span class="bar-label">20-29</span>
+                </div>
+                <div class="histogram-bar" style="height: 14%;">
+                    <span class="bar-value">7</span>
+                    <span class="bar-label">30-39</span>
+                </div>
+                <div class="histogram-bar" style="height: 20%;">
+                    <span class="bar-value">10</span>
+                    <span class="bar-label">40-49</span>
+                </div>
+                <div class="histogram-bar" style="height: 24%;">
+                    <span class="bar-value">12</span>
+                    <span class="bar-label">50-59</span>
+                </div>
+                <div class="histogram-bar" style="height: 16%;">
+                    <span class="bar-value">8</span>
+                    <span class="bar-label">60-69</span>
+                </div>
+                <div class="histogram-bar" style="height: 8%;">
+                    <span class="bar-value">4</span>
+                    <span class="bar-label">70-79</span>
+                </div>
+                <div class="histogram-bar" style="height: 2%;">
+                    <span class="bar-value">1</span>
+                    <span class="bar-label">80-89</span>
+                </div>
+                <div class="histogram-bar" style="height: 2%;">
+                    <span class="bar-value">1</span>
+                    <span class="bar-label">90-100</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="venn-section">
+            <h2>Venn Diagram Example</h2>
+            <p>Illustrating relationships between student groups (e.g., participation in clubs):</p>
+            <div class="venn-diagram">
+                <div class="venn-circle set-a">
+                    <span>Club A</span>
+                    <div class="intersection-label intersection-ab">15</div>
+                    <div class="intersection-label intersection-ac">10</div>
+                    <div class="intersection-label intersection-abc">5</div>
+                </div>
+                <div class="venn-circle set-b">
+                    <span>Club B</span>
+                    <div class="intersection-label intersection-ab">15</div>
+                    <div class="intersection-label intersection-bc">12</div>
+                    <div class="intersection-label intersection-abc">5</div>
+                </div>
+                <div class="venn-circle set-c">
+                    <span>Club C</span>
+                    <div class="intersection-label intersection-bc">12</div>
+                    <div class="intersection-label intersection-ac">10</div>
+                    <div class="intersection-label intersection-abc">5</div>
+                </div>
+                 <!-- Placeholder for the center intersection label if needed -->
+                 <!-- <div class="intersection-label intersection-abc">5</div> -->
+            </div>
+             <p style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #555;">
+                (Numbers represent the count of students in each intersection.)
+            </p>
+        </section>
+
+        <section class="insights-section">
+            <h2>Actionable Insights</h2>
+            <div class="insights">
+                <h3>Key Observations:</h3>
+                <ul>
+                    <li>The majority of students scored between 40 and 69, indicating a concentration of performance in the mid-range.</li>
+                    <li>There's a bimodal distribution tendency, with peaks around the 40-49 and 50-59 score ranges, suggesting two common performance levels.</li>
+                    <li>The cumulative relative frequency shows that 72% of students scored 59 or below, highlighting an area where additional support might be beneficial.</li>
+                    <li>The Venn diagram suggests significant overlap between Club B and Club C, with a smaller group participating in all three clubs. This could inform collaborative event planning.</li>
+                    <li>Understanding these distributions helps in tailoring academic support, identifying popular activities, and planning targeted interventions.</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // JavaScript for potential dynamic updates or interactivity
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Statistical analysis page loaded.");
+
+            // --- Example: Dynamically adjust histogram bar heights based on data ---
+            // In a real application, you'd fetch this data or have it in a JS array.
+            // For this static example, the heights are already set in the HTML style attribute.
+            // If you had data like:
+            // const scoreFrequencies = [1, 2, 4, 7, 10, 12, 8, 4, 1, 1];
+            // const maxFrequency = 12; // The highest frequency in the dataset
+            // const histogramBars = document.querySelectorAll('.histogram-bar');
+            //
+            // histogramBars.forEach((bar, index) => {
+            //     const frequency = scoreFrequencies[index];
+            //     const percentageHeight = (frequency / maxFrequency) * 100;
+            //     // Ensure height doesn't exceed 100% if maxFrequency is not the true max
+            //     bar.style.height = ${Math.min(percentageHeight, 100)}%;
+            //     bar.querySelector('.bar-value').textContent = frequency;
+            // });
+
+            // --- Example: Add hover effects to Venn diagram circles ---
+            const vennCircles = document.querySelectorAll('.venn-circle');
+            vennCircles.forEach(circle => {
+                circle.addEventListener('mouseover', () => {
+                    circle.style.transform += ' scale(1.05)'; // Slightly enlarge on hover
+                    circle.style.zIndex = '10'; // Bring to front
+                });
+                circle.addEventListener('mouseout', () => {
+                    // Reset transform, but need to be careful if original transform was complex
+                    // For simplicity, we'll just remove the scale effect if it was added
+                    const currentTransform = circle.style.transform;
+                    circle.style.transform = currentTransform.replace(' scale(1.05)', '');
+                    circle.style.zIndex = '1'; // Reset z-index
+                });
+            });
+
+            // Note: For a true interactive Venn diagram with dynamic overlap calculations
+            // and labels, a dedicated JavaScript library like 'venn.js' would be recommended.
+        });
+    </script>
+
+</body>
+</html>

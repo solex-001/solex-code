@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NACOSS - Welcome!</title>
+    <style>
+        /* Basic Reset & Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E8B57 100%);
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* For animations */
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2; /* Ensure content is above background elements */
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 1.5s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: normal;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards; /* Delay animation */
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        /* NACOSS Logo */
+        .logo-container {
+            margin-bottom: 1rem;
+        }
+
+        .nacoss-logo {
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+            animation: rotateIn 2s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        /* Decorative Elements - Pencils */
+        .pencil {
+            position: absolute;
+            width: 50px;
+            height: 150px;
+            background-color: #d4af37; /* Gold color for pencil body */
+            border-radius: 25px 25px 5px 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1; /* Behind content */
+        }
+
+        .pencil::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: #a0522d; /* Wood color for eraser */
+            border-radius: 50%;
+            border: 5px solid #8b4513; /* Darker wood border */
+        }
+
+        .pencil::after {
+            content: '';
+            position: absolute;
+            bottom: 25px; /* Positioned above the eraser */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid #b0c4de; /* Silver ferrule */
+        }
+
+        /* Specific Pencil Positions */
+        .pencil-left {
+            left: 5%;
+            transform: translateY(-50%) rotate(-20deg);
+            animation: slideInLeft 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .pencil-right {
+            right: 5%;
+            transform: translateY(-50%) rotate(20deg);
+            animation: slideInRight 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Decorative Elements - Books */
+        .books-container {
+            position: absolute;
+            bottom: -50px; /* Position below the header */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1;
+        }
+
+        .book {
+            width: 80px;
+            height: 120px;
+            background-color: #8b4513; /* Brown book cover */
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: rotate(5deg); /* Slight tilt */
+            animation: bounceInUp 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .book:nth-child(2) {
+            background-color: #a0522d; /* Darker brown */
+            transform: rotate(-5deg) translateY(10px); /* Different tilt and slight lift */
+            animation-delay: 0.2s; /* Stagger animation */
+        }
+
+        .book:nth-child(3) {
+            background-color: #d2b48c; /* Tan book cover */
+            transform: rotate(3deg) translateY(5px); /* Another tilt */
+            animation-delay: 0.4s; /* Stagger animation */
+        }
+
+        .book::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 5px;
+            right: 5px;
+            height: 10px;
+            background-color: rgba(0, 0, 0, 0.1); /* Spine shadow */
+            border-radius: 2px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 960px;
+            margin: 2rem auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #4CAF50;
+        }
+
+        .main-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            background-color: #333;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-90deg) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0) scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%) translateY(-50%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(-50%);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%) translateY(-50%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(-50%);
+            }
+        }
+
+        @keyframes bounceInUp {
+            from, 60%, 75%, 90%, 100% {
+                animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: translateY(3000px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-25px);
+            }
+            75% {
+                transform: translateY(-10px);
+            }
+            90% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .nacoss-logo {
+                width: 120px;
+            }
+            .pencil {
+                width: 40px;
+                height: 120px;
+            }
+            .books-container {
+                bottom: -30px;
+                gap: 15px;
+            }
+            .book {
+                width: 60px;
+                height: 90px;
+            }
+            .main-content {
+                padding: 2rem 1rem;
+                margin: 1rem auto;
+            }
+            .main-content h3 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            .nacoss-logo {
+                width: 100px;
+            }
+            .pencil-left, .pencil-right {
+                display: none; /* Hide pencils on very small screens */
+            }
+            .books-container {
+                display: none; /* Hide books on very small screens */
+            }
+            .main-content {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <!-- Replace with your actual NACOSS logo image -->
+                <!-- For demonstration, using a placeholder. You'll need to host your logo. -->
+                <img src="Screenshot_20250730-151341_1.png" alt="NACOSS Logo" class="nacoss-logo">
+            </div>
+            <h1>Welcome to NACOSS!</h1>
+            <h2>Innovating for a Brighter Future</h2>
+        </div>
+
+        <!-- Decorative Pencils -->
+        <div class="pencil pencil-left"></div>
+        <div class="pencil pencil-right"></div>
+
+        <!-- Decorative Books -->
+        <div class="books-container">
+            <div class="book"></div>
+            <div class="book"></div>
+            <div class="book"></div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h3>About NACOSS</h3>
+        <p>
+            The National Association of Computer Science Students (NACOSS) is a vibrant community dedicated to fostering innovation, collaboration, and knowledge sharing within the field of computer science. We aim to empower students with the skills and opportunities needed to excel in the ever-evolving tech landscape.
+        </p>
+        <p>
+            Join us for workshops, seminars, coding competitions, and networking events designed to enhance your academic and professional journey.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 NACOSS. 
+            <br> Design by Adesola.</p>
+    </footer>
+
+    <script>
+        // JavaScript for potential future enhancements or more complex animations
+        // For this example, the animations are primarily CSS-driven.
+        // You could add more interactive elements here if needed.
+
+        console.log("NACOSS webpage loaded successfully!");
+
+        // Example: Add a subtle parallax effect to the header background on scroll
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            header.style.backgroundPositionY = ${scrollPosition * 0.5}px;
+        });
+    </script>
+
+</body>
+</html>
