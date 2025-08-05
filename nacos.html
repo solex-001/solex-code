@@ -17,7 +17,7 @@
             background-color: #f4f4f4;
             color: #333;
             line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            overflow-x: hidden; 
         }
 
         /* Header Styling */
@@ -27,26 +27,26 @@
             padding: 2rem 0;
             text-align: center;
             position: relative;
-            overflow: hidden; /* For animations */
+            overflow: hidden; 
         }
 
         .header-content {
             position: relative;
-            z-index: 2; /* Ensure content is above background elements */
+            z-index: 2;
         }
 
         h1 {
             font-size: 3rem;
             margin-bottom: 0.5rem;
             animation: fadeInDown 1.5s ease-out forwards;
-            opacity: 0; /* Start hidden for animation */
+            opacity: 0; 
         }
 
         h2 {
             font-size: 1.8rem;
             font-weight: normal;
             animation: fadeInUp 1.5s ease-out 0.5s forwards; /* Delay animation */
-            opacity: 0; /* Start hidden for animation */
+            opacity: 0; 
         }
 
         /* NACOSS Logo */
@@ -55,10 +55,10 @@
         }
 
         .nacoss-logo {
-            width: 150px; /* Adjust size as needed */
+            width: 150px; 
             height: auto;
             animation: rotateIn 2s ease-out forwards;
-            opacity: 0; /* Start hidden for animation */
+            opacity: 0;
         }
 
         /* Decorative Elements - Pencils */
@@ -66,11 +66,11 @@
             position: absolute;
             width: 50px;
             height: 150px;
-            background-color: #d4af37; /* Gold color for pencil body */
+            background-color: #d4af37; 
             border-radius: 25px 25px 5px 5px;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 1; /* Behind content */
+            z-index: 1;
         }
 
         .pencil::before {
@@ -81,22 +81,22 @@
             transform: translateX(-50%);
             width: 30px;
             height: 30px;
-            background-color: #a0522d; /* Wood color for eraser */
+            background-color: #a0522d; 
             border-radius: 50%;
-            border: 5px solid #8b4513; /* Darker wood border */
+            border: 5px solid #8b4513; 
         }
 
         .pencil::after {
             content: '';
             position: absolute;
-            bottom: 25px; /* Positioned above the eraser */
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-bottom: 30px solid #b0c4de; /* Silver ferrule */
+            border-bottom: 30px solid #b0c4de; 
         }
 
         /* Specific Pencil Positions */
@@ -117,7 +117,7 @@
         /* Decorative Elements - Books */
         .books-container {
             position: absolute;
-            bottom: -50px; /* Position below the header */
+            bottom: -50px; 
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -128,7 +128,7 @@
         .book {
             width: 80px;
             height: 120px;
-            background-color: #8b4513; /* Brown book cover */
+            background-color: #8b4513; 
             border-radius: 5px;
             position: relative;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -138,15 +138,15 @@
         }
 
         .book:nth-child(2) {
-            background-color: #a0522d; /* Darker brown */
-            transform: rotate(-5deg) translateY(10px); /* Different tilt and slight lift */
-            animation-delay: 0.2s; /* Stagger animation */
+            background-color: #a0522d;
+            transform: rotate(-5deg) translateY(10px);
+            animation-delay: 0.2s;
         }
 
         .book:nth-child(3) {
-            background-color: #d2b48c; /* Tan book cover */
-            transform: rotate(3deg) translateY(5px); /* Another tilt */
-            animation-delay: 0.4s; /* Stagger animation */
+            background-color: #d2b48c; 
+            transform: rotate(3deg) translateY(5px); 
+            animation-delay: 0.4s; 
         }
 
         .book::before {
@@ -156,7 +156,7 @@
             left: 5px;
             right: 5px;
             height: 10px;
-            background-color: rgba(0, 0, 0, 0.1); /* Spine shadow */
+            background-color: rgba(0, 0, 0, 0.1); 
             border-radius: 2px;
         }
 
@@ -314,10 +314,10 @@
                 width: 100px;
             }
             .pencil-left, .pencil-right {
-                display: none; /* Hide pencils on very small screens */
+                display: none;
             }
             .books-container {
-                display: none; /* Hide books on very small screens */
+                display: none; 
             }
             .main-content {
                 margin-top: 1rem;
@@ -330,8 +330,7 @@
     <header>
         <div class="header-content">
             <div class="logo-container">
-                <!-- Replace with your actual NACOSS logo image -->
-                <!-- For demonstration, using a placeholder. You'll need to host your logo. -->
+            
                 <img src="Screenshot_20250730-151341_1.png" alt="NACOSS Logo" class="nacoss-logo">
             </div>
             <h1>Welcome to NACOSS!</h1>
@@ -366,19 +365,17 @@
     </footer>
 
     <script>
-        // JavaScript for potential future enhancements or more complex animations
-        // For this example, the animations are primarily CSS-driven.
-        // You could add more interactive elements here if needed.
-
+       
         console.log("NACOSS webpage loaded successfully!");
 
         // Example: Add a subtle parallax effect to the header background on scroll
         const header = document.querySelector('header');
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY;
-            header.style.backgroundPositionY = ${scrollPosition * 0.5}px;
+            header.style.backgroundPositionY = '${scrollPosition * 0.5}px;'
         });
     </script>
 
 </body>
+
 </html>
